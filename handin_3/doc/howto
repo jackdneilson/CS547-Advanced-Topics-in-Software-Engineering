@@ -1,0 +1,11 @@
+Generate pop randomly
+Eval pop
+Take first front
+Take next n fronts until next front would be > 50%
+Take k from that front (evenly spread using crowding distance) until 50%
+Use taken to generate next population
+Terminate when front is stable (e.g. not changed in 5 gens)
+
+Customer need for requirement is based on position in list (possibly normalise so sum of importances is 1)
+pareto front is 2-dimensional from score and cost
+
