@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bbe4f6e1-c7cf-46e2-8686-4656f660564a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handin_3/src/MultiOpt.py" beforeDir="false" afterPath="$PROJECT_DIR$/handin_3/src/MultiOpt.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,7 +13,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/CS547_Advanced_Topics_in_Software_Engineering$RandomSearch.coverage" NAME="RandomSearch Coverage Results" MODIFIED="1539555439719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/handin_2" />
     <SUITE FILE_PATH="coverage/CS547_Advanced_Topics_in_Software_Engineering$RegressionTesting.coverage" NAME="RegressionTesting Coverage Results" MODIFIED="1539552575741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/handin_2" />
-    <SUITE FILE_PATH="coverage/CS547_Advanced_Topics_in_Software_Engineering$MultiOpt.coverage" NAME="MultiOpt Coverage Results" MODIFIED="1540564754461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/handin_3/" />
+    <SUITE FILE_PATH="coverage/CS547_Advanced_Topics_in_Software_Engineering$MultiOpt.coverage" NAME="MultiOpt Coverage Results" MODIFIED="1540567515203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/handin_3/" />
     <SUITE FILE_PATH="coverage/CS547_Advanced_Topics_in_Software_Engineering$HillClimber.coverage" NAME="HillClimber Coverage Results" MODIFIED="1539554084881" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/handin_2" />
   </component>
   <component name="FUSProjectUsageTrigger">
@@ -30,22 +29,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="2" />
+          <entry key="py" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="2" />
+          <entry key="Python" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="2928" />
+          <entry key="py" value="3102" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="2928" />
+          <entry key="Python" value="3102" />
         </counts>
       </usages-collector>
     </session>
@@ -55,12 +54,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/handin_3/src/MultiOpt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="27" column="46" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+            <state relative-caret-position="176">
+              <caret line="84" column="87" lean-forward="true" selection-start-line="84" selection-start-column="87" selection-end-line="84" selection-end-column="87" />
               <folding>
-                <element signature="e#0#44#0" expanded="true" />
-                <marker date="1540565115321" expanded="true" signature="1262:1263" ph="..." />
-                <marker date="1540565115321" expanded="true" signature="1263:1265" ph="..." />
+                <marker date="1540567512694" expanded="true" signature="1272:1273" ph="..." />
+                <marker date="1540567512694" expanded="true" signature="1273:1275" ph="..." />
               </folding>
             </state>
           </provider>
@@ -136,11 +134,6 @@
               <item name="CS547-Advanced-Topics-in-Software-Engineering" type="462c0819:PsiDirectoryNode" />
               <item name="handin_3" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CS547-Advanced-Topics-in-Software-Engineering" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CS547-Advanced-Topics-in-Software-Engineering" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -311,7 +304,7 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.32931423" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
@@ -365,12 +358,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/handin_3/src/MultiOpt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="27" column="46" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+        <state relative-caret-position="176">
+          <caret line="84" column="87" lean-forward="true" selection-start-line="84" selection-start-column="87" selection-end-line="84" selection-end-column="87" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
-            <marker date="1540565115321" expanded="true" signature="1262:1263" ph="..." />
-            <marker date="1540565115321" expanded="true" signature="1263:1265" ph="..." />
+            <marker date="1540567512694" expanded="true" signature="1272:1273" ph="..." />
+            <marker date="1540567512694" expanded="true" signature="1273:1275" ph="..." />
           </folding>
         </state>
       </provider>

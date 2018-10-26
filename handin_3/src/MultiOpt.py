@@ -1,4 +1,5 @@
 from platypus import NSGAII, Problem, Integer
+from matplotlib import pyplot as plt
 import copy
 import random
 
@@ -35,7 +36,6 @@ class ReleaseProblem(Problem):
                 sum_value += solution.problem.requirements[i].value
                 sum_cost += solution.problem.requirements[i].cost
 
-        print(self.budget)
         if sum_cost > self.budget:
             sum_value = -1
 
@@ -49,6 +49,8 @@ if __name__ == '__main__':
     customers = []
     costs = []
     requirements = []
+
+    budget = 120
 
     with open('test/classic-nrp/nrp1_customers') as customer_file:
         for line in customer_file:
@@ -80,8 +82,14 @@ if __name__ == '__main__':
         requirements.append(Requirement(i, value, int(costs[i])))
 
     # Instantiate the problem and run, then print the results
-    problem = ReleaseProblem(requirements, 120)
+    problem = ReleaseProblem(requirements, 0.5 * sum(req.cost for req in requirements))
     alg = NSGAII(problem)
-    alg.run(5000)
+    alg.run(10000)
     for result in alg.result:
-        print(result)
+        print(result.objectives)
+
+    plt.scatter([s.objectives[0] for s in alg.result],
+                [s.objectives[1] for s in alg.result])
+    plt.xlim([min(s.objectives[0] for s in alg.result), max(s.objectives[0] for s in alg.result)])
+    plt.ylim([min(s.objectives[1] for s in alg.result), max(s.objectives[1] for s in alg.result)])
+    plt.show()
