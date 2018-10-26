@@ -1,4 +1,4 @@
-from platypus import NSGAII, Problem, Generator, Solution, Real, Mutation
+from platypus import NSGAII, Problem, Integer
 import copy
 import random
 
@@ -18,92 +18,31 @@ class Requirement:
 
 class ReleaseProblem(Problem):
     def __init__(self, requirements, budget):
-        super(ReleaseProblem, self).__init__(1, 2)
-        self.genepool = requirements
+        super(ReleaseProblem, self).__init__(len(requirements), 2)
+        self.requirements = requirements
         self.budget = budget
-        self.initial_size = 50
-        self.types = [Real(0, 50), Real(0, 50)]
+        self.types[:] = Integer(0,1)
         self.directions[0] = self.MAXIMIZE
         self.directions[1] = self.MINIMIZE
 
+    # Sum the value and cost using list lookup
     def evaluate(self, solution):
         sum_value = 0
         sum_cost = 0
 
-        for requirement in solution.variables[0]:
-            sum_value += requirement.value
-            sum_cost += requirement.cost
+        for i in range(len(solution.variables) - 1):
+            if solution.variables[i] == 1:
+                sum_value += solution.problem.requirements[i].value
+                sum_cost += solution.problem.requirements[i].cost
 
+        print(self.budget)
         if sum_cost > self.budget:
             sum_value = -1
 
         solution.objectives[:] = [sum_value, sum_cost]
         solution.evaluated = True
-        return [sum_value, sum_cost]
+        #return [sum_value, sum_cost]
 
-
-class ReleaseGenerator(Generator):
-    def __init__(self):
-        super(ReleaseGenerator, self).__init__()
-
-    def generate(self, problem):
-        solution = Solution(problem)
-
-        solution_vars = []
-        for i in range(problem.initial_size):
-            node = []
-            generated = False
-            while not generated:
-                rand = random.randint(0, len(problem.genepool) - 1)
-                choice = problem.genepool[rand]
-
-                if choice not in node:
-                    if get_cost(node) + choice.cost > problem.budget:
-                        generated = True
-                    else:
-                        node.append(choice)
-
-            solution_vars.append(node)
-
-        solution.variables = solution_vars
-        return solution
-
-
-class ReleaseMutator(Mutation):
-    def __init__(self, probability=1, distribution_index=20.0):
-        super(ReleaseMutator, self).__init__()
-        self.probability = probability
-        self.distribution_index = distribution_index
-
-    def mutate(self, parent):
-        child = copy.deepcopy(parent)
-        problem = child.problem
-        probability = self.probability
-
-        if isinstance(probability, int):
-            probability /= float(len([t for t in problem.types if isinstance(t, Real)]))
-
-        # TODO: Mutation happens here
-        for i in range(len(child.variables)):
-            if isinstance(problem.types[i], Real):
-                if random.uniform(0.0, 1.0) <= probability:
-                    child.variables[i] = self.pm_mutation(float(child.variables[i]),
-                                                          problem.types[i].min_value,
-                                                          problem.types[i].max_value)
-
-        # TODO: Mutation happens here
-
-        child.evaluated = False
-        return child
-
-
-
-def get_cost(node):
-    cost = 0
-    for req in node:
-        cost += req.cost
-
-    return cost
 
 if __name__ == '__main__':
     # Get the customers and requirements from the files
@@ -140,10 +79,9 @@ if __name__ == '__main__':
 
         requirements.append(Requirement(i, value, int(costs[i])))
 
-    problem = ReleaseProblem(requirements, 50)
-    alg = NSGAII(problem, generator=ReleaseGenerator())
+    # Instantiate the problem and run, then print the results
+    problem = ReleaseProblem(requirements, 120)
+    alg = NSGAII(problem)
     alg.run(5000)
-    for requirement in alg.result[0].variables[0]:
-        print("id: " + str(requirement.id))
-        print("value:" + str(requirement.value))
-        print("cost: " + str(requirement.cost))
+    for result in alg.result:
+        print(result)
