@@ -34,6 +34,9 @@ class ReleaseProblem(Problem):
             sum_value += requirement.value
             sum_cost += requirement.cost
 
+        if sum_cost > self.budget:
+            sum_value = -1
+
         solution.objectives[:] = [sum_value, sum_cost]
         solution.evaluated = True
         return [sum_value, sum_cost]
