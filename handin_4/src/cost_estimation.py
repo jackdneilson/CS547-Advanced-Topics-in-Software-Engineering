@@ -4,6 +4,9 @@ import math
 import operator
 import sys
 import numpy
+from sklearn import model_selection
+from sklearn import metrics
+from sklearn.linear_model import LinearRegression
 
 
 # Does not allow for dividebyzero exceptions
@@ -13,14 +16,19 @@ def protected_div(left, right):
     except ZeroDivisionError:
         return 1
 
+
 class EvalMethods(Enum):
     MEAN_ABSOLUTE_ERROR = 1
+    # TODO: IMPLEMENT!
+    ROOT_MEAN_SQUARED_ERROR = 2
 
 
 if __name__ == '__main__':
+    # First attempt solution using genetic programming
+    # Choose evaluation method
     evaluation_method = EvalMethods.MEAN_ABSOLUTE_ERROR
     min_tree_depth = 3
-    max_tree_depth = 5
+    max_tree_depth = 17
 
     input_names = []
     input_sets = []
@@ -32,15 +40,25 @@ if __name__ == '__main__':
             if line[0] != "%" and line[0:9] != "@relation" and line[0:5] != "@data" and line != "\n":
                 if line[0:10] == "@attribute":
                     if line.split()[1] != "Effort":
-                        input_names.append(line.split()[1])
+                        if sys.argv[1] == "data/china.arff" \
+                                or sys.argv[1] == "data/kemerer.arff" \
+                                or sys.argv[1] == "data/miyazaki94.arff":
+                            if line.split()[1] != "ID":
+                                input_names.append(line.split()[1])
                 else:
-                    new_inputs = line.split(',')[:-1]
+                    new_inputs = []
+                    if sys.argv[1] == "data/china.arff" \
+                            or sys.argv[1] == "data/kemerer.arff" \
+                            or sys.argv[1] == "data/miyazaki94.arff":
+                        new_inputs = line.split(',')[1:-1]
+                    else:
+                        new_inputs = line.split(',')[:-1]
                     for i in range(len(new_inputs)):
                         new_inputs[i] = float(new_inputs[i])
                     input_sets.append(new_inputs)
-                    #print(new_inputs)
-                    actual_costs.append(float(line.split(',')[-1:][0].split('\n')[0]))
-    #print(input_sets)
+                    actual_cost = float(line.split(',')[-1:][0].split('\n')[0])
+                    actual_costs.append(actual_cost)
+
     number_inputs = len(input_names)
 
     # Generate a set of primitives to allow for generation / permutation
@@ -86,8 +104,6 @@ if __name__ == '__main__':
 
     # Register the evaluation function, the selection function, the mating operation, and the mutation operation
     toolbox.register("evaluate", evaluate_soln, input_sets, actual_costs)
-    # TODO: Maybe change
-    # toolbox.register("select", tools.selTournament, tournsize=5)
     toolbox.register("select", tools.selBest)
 
     toolbox.register("mate", gp.cxOnePoint)
@@ -107,8 +123,24 @@ if __name__ == '__main__':
     mstats.register("min", numpy.min)
     mstats.register("max", numpy.max)
 
+    # Run the algorithm and take the best generated solution
     pop = toolbox.population(n=100)
     hof = tools.HallOfFame(1)
-    algorithms.eaSimple(pop, toolbox, 0.5, 0.1, 100, stats=mstats, halloffame=hof, verbose=True)
+    algorithms.eaSimple(pop, toolbox, 0.5, 0.1, 100, stats=mstats, halloffame=hof, verbose=False)
     print(hof[0])
     print(evaluate_soln(input_sets, actual_costs, hof[0]))
+
+    # Create a training and testing set
+    descriptor_train, descriptor_test, cost_train, cost_test = model_selection.train_test_split(
+        input_sets, actual_costs, test_size=0.25)
+
+    # Attempt solution using linear regression
+    # Create a model
+    lnr = LinearRegression()
+    lnr.fit(descriptor_train, cost_train)
+
+    # Use the model to predict cost
+    lnr_pred = lnr.predict(descriptor_test)
+
+    if evaluation_method == EvalMethods.MEAN_ABSOLUTE_ERROR:
+        print(metrics.mean_absolute_error(cost_test, lnr_pred))
