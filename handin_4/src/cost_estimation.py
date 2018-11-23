@@ -39,7 +39,7 @@ if __name__ == '__main__':
         for line in data:
             if line[0] != "%" and line[0:9] != "@relation" and line[0:5] != "@data" and line != "\n":
                 if line[0:10] == "@attribute":
-                    if line.split()[1] != "Effort":
+                    if line.split()[1] != "Effort" and line.split()[1] != "EffortMM" and line.split()[1] != "MM":
                         input_names.append(line.split()[1])
                 else:
                     new_inputs = line.split(',')[:-1]
@@ -54,11 +54,6 @@ if __name__ == '__main__':
 
     # Generate a set of primitives to allow for generation / permutation
     prim_set = gp.PrimitiveSet("MAIN", number_inputs)
-    # for i, arg_name in enumerate(prim_set.arguments):
-    #     prim_set.arguments[i] = input_names[i]
-    #     prim_set.mapping[input_names[i]] = prim_set.mapping[arg_name]
-    #     prim_set.mapping[input_names[i]].value = input_names[i]
-    #     del prim_set.mapping[arg_name]
     prim_set.addPrimitive(operator.add, 2)
     prim_set.addPrimitive(operator.sub, 2)
     prim_set.addPrimitive(operator.mul, 2)
@@ -88,13 +83,12 @@ if __name__ == '__main__':
 
         if evaluation_method == EvalMethods.MEAN_ABSOLUTE_ERROR:
             sae = 0
-
             for i, input_set in enumerate(input_sets):
                 sae += abs(actual_costs[i] - func(*input_set))
             return [sae / len(input_sets)]
+
         elif evaluation_method == EvalMethods.ROOT_MEAN_SQUARED_ERROR:
             sumsq = 0
-
             for i, input_set in enumerate(input_sets):
                 sumsq += math.pow((actual_costs[i] - func(*input_set)), 2)
             return [math.sqrt(sumsq / len(input_sets))]
@@ -109,7 +103,6 @@ if __name__ == '__main__':
         for index in train_indices:
             input_set_train.append(input_sets[index])
             cost_train.append(actual_costs[index])
-
         for index in test_indices:
             input_set_test.append(input_sets[index])
             cost_test.append(actual_costs[index])
@@ -139,7 +132,6 @@ if __name__ == '__main__':
         pop = toolbox.population(n=100)
         hof = tools.HallOfFame(1)
         algorithms.eaSimple(pop, toolbox, 0.5, 0.1, 1000, stats=mstats, halloffame=hof, verbose=False)
-        print(hof[0])
         print(evaluate_soln(input_set_test, cost_test, hof[0]))
 
         # Attempt solution using linear regression
